@@ -1,4 +1,4 @@
-<?php
+<?php namespace MLM;
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;

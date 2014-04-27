@@ -1,13 +1,6 @@
-<?php
+<?php namespace MLM;
 
 class Contact extends BaseModel {
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
 
 	/**
 	 * Mass assigment can be used for these table columns
@@ -21,7 +14,7 @@ class Contact extends BaseModel {
 	 * 
 	 * @var array
 	 */
-	protected $guarded = array('id')
+	protected $guarded = array('id');
 
 	/**
 	 * Define the Contact/User Relationship (One to Many)
@@ -43,12 +36,22 @@ class Contact extends BaseModel {
         return $this->belongsToMany('Distribution');
     }
 
+    /**
+     * Set a Query Scope for the User Id
+     * @param  [type] $query [description]
+     * @return [type]        [description]
+     */
+    public function scopeUser($query)
+    {
+    	return $query->where('user_id', Session::get('userId'));
+    }
+
 	/**
 	 * Validation Rules
 	 * 
 	 * @var array
 	 */
-	private $rules = array(
+	protected $rules = array(
         'email'  	=> 'required|email',
         'user_id'  	=> 'required',
     );

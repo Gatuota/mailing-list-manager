@@ -1,7 +1,7 @@
-<?php
+<?php namespace MLM;
 // via http://daylerees.com/trick-validation-within-models
 
-class BaseModel extends Eloquent
+class BaseModel extends \Eloquent
 {
     /**
      * Custom Error messages

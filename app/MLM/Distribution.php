@@ -1,4 +1,4 @@
-<?php
+<?php namespace MLM;
 
 class Distribution extends BaseModel {
 
