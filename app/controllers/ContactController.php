@@ -51,7 +51,21 @@ class ContactController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		// attempt validation
+		if ($this->contact->store(Input::all()))
+		{
+		    // success 
+		    Session::flash('success', $this->contact->getMessage());
+			return Redirect::action('ContactController@index');
+		}
+		else
+		{
+		    // there was a problem
+		    Session::flash('error', $this->contact->getMessage());
+            return Redirect::action('ContactController@create')
+                ->withInput()
+                ->withErrors( $this->contact->getErrors() );
+		}
 	}
 
 
