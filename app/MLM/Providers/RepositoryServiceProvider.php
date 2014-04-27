@@ -1,6 +1,7 @@
 <?php namespace MLM\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Session\Store;
 use MLM\Repositories\Contact\EloquentContact;
 use MLM\Contact;
 
@@ -17,7 +18,8 @@ class RepositoryServiceProvider extends ServiceProvider {
         $app->bind('MLM\Repositories\Contact\ContactInterface', function($app)
         {
             return new EloquentContact(
-            	new Contact
+            	new Contact,
+            	$app['session.store']
             );
         });
 
