@@ -16,3 +16,9 @@
 {
     return View::make('hello');
 }));
+
+
+// Contact Routes
+Route::get('contacts', 'ContactController@index');
+Route::get('contacts/new', 'ContactController@create');
+Route::post('contacts', 'ContactController@store');

@@ -9,6 +9,12 @@ class ContactController extends \BaseController {
 	public function __construct(ContactInterface $contact)
 	{
 		$this->contact = $contact;
+
+		//Check CSRF token on POST
+		$this->beforeFilter('csrf', array('on' => 'post'));
+
+		// Make sure the user is logged in. 
+		$this->beforeFilter('Sentinel\auth');
 	}
 
 	/**
@@ -18,7 +24,11 @@ class ContactController extends \BaseController {
 	 */
 	public function index()
 	{
-		dd($this->contact);
+		// Pull all the contacts for this user.
+		$contacts = $this->contact->byUser(Session::get('userId'));
+
+		// Show the Contacts Index View
+		return View::make('contacts.index')->with('contacts', $contacts);
 	}
 
 
@@ -29,7 +39,8 @@ class ContactController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		// Show the Create Contact Form
+		return View::make('contacts.create');
 	}
 
 
