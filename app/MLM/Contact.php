@@ -23,7 +23,7 @@ class Contact extends BaseModel {
 	 */
 	public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('MLM\User');
     }
 
     /**
