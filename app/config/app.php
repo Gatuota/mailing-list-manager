@@ -121,6 +121,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'Sentinel\SentinelServiceProvider', 
+		'MLM\Providers\RepositoryServiceProvider',
 
 	),
 
