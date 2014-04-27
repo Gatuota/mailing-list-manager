@@ -76,7 +76,7 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function byUser($user_id)
 	{
-		
+		return $this->contact->user()->get();
 	}
 
 
