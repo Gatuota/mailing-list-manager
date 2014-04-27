@@ -41,9 +41,9 @@ class Contact extends BaseModel {
      * @param  [type] $query [description]
      * @return [type]        [description]
      */
-    public function scopeUser($query)
+    public function scopeCurrentUser($query, $user_id)
     {
-    	return $query->where('user_id', Session::get('userId'));
+    	return $query->where('user_id', $user_id);
     }
 
 	/**
@@ -52,8 +52,7 @@ class Contact extends BaseModel {
 	 * @var array
 	 */
 	protected $rules = array(
-        'email'  	=> 'required|email',
-        'user_id'  	=> 'required',
+        'email'  	=> 'required|email'
     );
 
 }
