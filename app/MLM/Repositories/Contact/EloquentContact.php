@@ -1,17 +1,22 @@
 <?php namespace MLM\Repositories\Contact;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Session\Store;
+use MLM\Contact;
 
 class EloquentContact implements ContactInterface {
 	
 	protected $contact;
+	protected $session;
+	private $message;
 
 	/**
 	 * Construct a new SentryClient Object
 	 */
-	public function __construct(Model $contact)
+	public function __construct(Model $contact, Store $session)
 	{
 		$this->contact = $contact;
+		$this->session = $session;
 	}
 
 	/**
@@ -21,6 +26,23 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function store($data)
 	{
+		$data['user_id'] = $this->session->get('userId');
+
+		$contact = new Contact($data);
+
+		// attempt validation
+		if ($contact->save())
+		{
+		    // success code
+		    return $contact;
+		}
+		else
+		{
+		    $this->message = 'There was a problem creating the contact.';
+            $this->errors = $contact->errors();
+
+            return false;
+		}
 
 	}
 	
@@ -76,8 +98,19 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function byUser($user_id)
 	{
-		return $this->contact->user()->get();
+		return $this->contact->currentUser($user_id)->get();
 	}
 
+
+	public function getMessage()
+	{
+		return $this->message;
+	}
+
+
+	public function getErrors()
+	{
+		return $this->errors;
+	}
 
 }
