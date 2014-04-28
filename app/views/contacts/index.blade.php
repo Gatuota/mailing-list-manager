@@ -29,7 +29,7 @@ Contacts
 		<tbody>
 			@foreach ($contacts as $contact)
 				<tr>
-					<td>{{{ $contact->firstName . $contact->middleName . $contact->lastName }}}</td>
+					<td><a href="{{ action('ContactController@show', $contact->id) }}">{{{ $contact->firstName . " " . $contact->middleName . " " . $contact->lastName }}}</a></td>
 					<td>{{{ $contact->email }}}</td>
 					<td></td>
 				</tr>

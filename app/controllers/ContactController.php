@@ -77,7 +77,9 @@ class ContactController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$contact = $this->contact->byId($id);
+
+		return View::make('contacts.show')->with('contact', $contact);
 	}
 
 
