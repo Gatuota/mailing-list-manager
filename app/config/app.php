@@ -120,6 +120,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
+		'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
 		'Sentinel\SentinelServiceProvider', 
 		'MLM\Providers\RepositoryServiceProvider',
 
@@ -188,6 +189,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+
+		'Gravatar' 		  => 'Thomaswelton\LaravelGravatar\Facades\Gravatar'
 
 	),
 
