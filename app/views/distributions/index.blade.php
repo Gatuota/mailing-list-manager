@@ -23,14 +23,18 @@ Lists
 	<table class="full-width">
 		<thead>
 			<th>Name</th>
+			<th>Reply Alias</th>
+			<th>Contacts</th>
 			<th>Options</th>
 		</thead>
 		<tbody>
 			@foreach ($distributions as $distribution)
 				<tr>
 					<td>
-						<a href="{{ action('DistributionController@show', $distribution->id) }}">{{{ $distribution->firstName . " " . $distribution->middleName . " " . $distribution->lastName }}}</a>
+						<a href="{{ action('DistributionController@show', $distribution->id) }}">{{{ $distribution->name }}}</a>
 					</td>
+					<td>{{ $distribution->replyTo }}</td>
+					<td></td>
 					<td>
 						<button class="button small" type="button" onClick="location.href='{{ action('DistributionController@edit', array($distribution->id)) }}'">Edit</button> 
 						<button class="button small alert action_confirm" href="{{ action('DistributionController@destroy', array($distribution->id)) }}" data-token="{{ Session::getToken() }}" data-method="delete">Delete</button>

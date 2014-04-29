@@ -27,7 +27,9 @@ class EloquentDistribution implements DistributionInterface {
 	 */
 	public function store( $data )
 	{
-		$distribution = new Distribution( $data + array('user_id' => $this->session->get( 'userId' )));
+		$distribution = new Distribution( $data + array('user_id' => $this->session->get( 'userId' ), 'active' => 1));
+
+		//dd($data + array('user_id' => $this->session->get( 'userId' )));
 
 		// attempt validation
 		if ($distribution->save())
@@ -98,17 +100,6 @@ class EloquentDistribution implements DistributionInterface {
 	public function byId( $distribution_id )
 	{
 		return $this->distribution->find( $distribution_id );
-	}
-
-	/**
-	 * Return a specific distribution by a given email
-	 * 
-	 * @param  string $email
-	 * @return Illuminate\Database\Eloquent\Model
-	 */
-	public function byEmail( $email )
-	{
-
 	}
 
 	/**

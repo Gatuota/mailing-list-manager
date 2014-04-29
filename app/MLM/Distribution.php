@@ -7,7 +7,7 @@ class Distribution extends BaseModel {
 	 * 
 	 * @var array
 	 */
-	protected $fillable = array('firstName', 'middleName', 'lastName', 'email', 'phone', 'notes', 'user_id');
+	protected $fillable = array('name', 'replyTo', 'subject', 'body', 'active', 'user_id');
 
 	/**
 	 * Mass Assigment is not permitted for these table columns
@@ -42,7 +42,8 @@ class Distribution extends BaseModel {
 	 * @var array
 	 */
 	protected $rules = array(
-        'email'  	=> 'required|email',
+        'name'  	=> 'required',
+        'replyTo'  	=> 'required|email',
         'user_id'  	=> 'required',
     );
 

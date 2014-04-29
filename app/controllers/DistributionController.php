@@ -44,7 +44,8 @@ class DistributionController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		// Show the 'Create Distribution' form
+		return View::make('distributions.create');
 	}
 
 
@@ -55,7 +56,21 @@ class DistributionController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		// Attempt to save the new distribution list
+		if ($this->distribution->store(Input::all()))
+		{
+		    // success 
+		    Session::flash('success', $this->distribution->getMessage());
+			return Redirect::action('DistributionController@index');
+		}
+		else
+		{
+		    // there was a problem
+		    Session::flash('error', $this->distribution->getMessage());
+            return Redirect::action('DistributionController@create')
+                ->withInput()
+                ->withErrors( $this->distribution->getErrors() );
+		}
 	}
 
 
@@ -65,9 +80,12 @@ class DistributionController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($distribution_id)
 	{
-		//
+		// Show the Distribution List details
+		$distribution = $this->distribution->byId($distribution_id);
+
+		return View::make('distributions.show')->with('distribution', $distribution);
 	}
 
 
@@ -77,9 +95,12 @@ class DistributionController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($distribution_id)
 	{
-		//
+		// Show the "Edit Distribution" form
+		$distribution = $this->distribution->byId($distribution_id);
+
+		return View::make('distributions.edit')->with('distribution', $distribution);
 	}
 
 
@@ -89,9 +110,23 @@ class DistributionController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($distribution_id)
 	{
-		//
+		// Attempt to update the distribution
+		if ($this->distribution->update(Input::all() + array('id' => $distribution_id)))
+		{
+		    // success 
+		    Session::flash('success', $this->distribution->getMessage());
+			return Redirect::to(Input::get('redirect'));
+		}
+		else
+		{
+		    // there was a problem
+		    Session::flash('error', $this->distribution->getMessage());
+            return Redirect::url('DistributionController@edit', $id)
+                ->withInput()
+                ->withErrors( $this->distribution->getErrors() );
+		}
 	}
 
 
@@ -103,7 +138,17 @@ class DistributionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		// Attempt to delete this distribution
+		if ($this->distribution->destroy($id))
+		{
+			Session::flash('success', 'List Deleted');
+            return Redirect::action('DistributionController@index');
+        }
+        else 
+        {
+        	Session::flash('error', 'Unable to delete List');
+            return Redirect::action('DistributionController@index');
+        }
 	}
 
 
