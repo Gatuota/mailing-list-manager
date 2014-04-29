@@ -41,9 +41,9 @@ class Contact extends BaseModel {
      * @param  [type] $query [description]
      * @return [type]        [description]
      */
-    public function scopeCurrentUser($query, $user_id)
+    public function scopeCurrentUser( $query )
     {
-    	return $query->where('user_id', $user_id);
+    	return $query->where('user_id', \Session::get('userId'));
     }
 
 	/**
