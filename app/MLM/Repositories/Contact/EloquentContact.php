@@ -79,7 +79,13 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function destroy( $contact_id )
 	{
+		// Fetch Contact from DB
+		$contact = $this->byId($contact_id);
 
+		// Destroy the contact 
+		$contact->delete();
+
+		return true;
 	}
 
 	/**

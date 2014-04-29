@@ -14,7 +14,7 @@ Contacts
 		<h3>Your Contacts</h3>
 	</div>
 	<div class="small-6 columns">
-		<a class="button small right" href="{{ action('ContactController@create') }}">New Contact</a>
+		<a class="button right" href="{{ action('ContactController@create') }}">New Contact</a>
 	</div>
 </div>
 
@@ -33,6 +33,7 @@ Contacts
 					<td>{{{ $contact->email }}}</td>
 					<td>
 						<button class="button small" type="button" onClick="location.href='{{ action('ContactController@edit', array($contact->id)) }}'">Edit</button> 
+						<button class="button small alert action_confirm" href="{{ action('ContactController@destroy', array($contact->id)) }}" data-token="{{ Session::getToken() }}" data-method="delete">Delete</button>
 					</td>
 				</tr>
 			@endforeach

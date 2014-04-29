@@ -140,19 +140,15 @@ class ContactController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
-		// Permissions Check
-		
-
-		if ($this->client->destroy($id))
+		if ($this->contact->destroy($id))
 		{
-			Session::flash('success', 'Client Deleted');
-            return Redirect::to('/clients');
+			Session::flash('success', 'Contact Deleted');
+            return Redirect::action('ContactController@index');
         }
         else 
         {
-        	Session::flash('error', 'Unable to Delete Client');
-            return Redirect::to('/clients');
+        	Session::flash('error', 'Unable to delete Contact');
+            return Redirect::action('ContactController@index');
         }
 	}
 
