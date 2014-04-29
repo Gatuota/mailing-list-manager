@@ -24,40 +24,23 @@ App::after(function($request, $response)
 
 /*
 |--------------------------------------------------------------------------
-| Authentication Filters
+| Object Ownership Filter
 |--------------------------------------------------------------------------
-|
-| The following filters are used to verify that the user of the current
-| session is logged into this application. The "basic" filter easily
-| integrates HTTP Basic authentication for quick, simple checking.
-|
+| 
+| Check to see the object referenced by the URL belongs to the current user.
+| 
 */
 
-Route::filter('auth', function()
+Route::filter('my', function($route, $request, $value)
 {
-	if (Auth::guest()) return Redirect::guest('login');
-});
-
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
-});
-
-/*
-|--------------------------------------------------------------------------
-| Guest Filter
-|--------------------------------------------------------------------------
-|
-| The "guest" filter is the counterpart of the authentication filters as
-| it simply checks that the current user is not logged in. A redirect
-| response will be issued if they are, which you may freely change.
-|
-*/
-
-Route::filter('guest', function()
-{
-	if (Auth::check()) return Redirect::to('/');
+	$repository = App::make('MLM\\Repositories\\' . ucfirst($value) . '\\' . ucfirst($value) . 'Interface');
+	
+	if ( ! $repository->mine(Route::input('id')) )
+	{
+		Session::flash('error', trans('Sentinel::users.noaccess'));
+		return Redirect::route('home');
+	}
+	
 });
 
 /*
