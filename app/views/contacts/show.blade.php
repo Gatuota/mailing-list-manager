@@ -37,7 +37,8 @@ Contact Details
             <dl>{{{ $contact->created_at }}}</dl>
         </dl>
 
-        <a class="button small" href="{{ action('ContactController@edit', $contact->id) }}">Edit</a>
+        <button class="button small" href="{{ action('ContactController@edit', $contact->id) }}">Edit</button>
+        <button class="button small alert action_confirm" href="{{ action('ContactController@destroy', array($contact->id)) }}" data-token="{{ Session::getToken() }}" data-method="delete">Delete</button>
       </div>
     </div>
 </div>
