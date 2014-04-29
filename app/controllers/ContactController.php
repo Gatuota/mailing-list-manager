@@ -15,6 +15,13 @@ class ContactController extends \BaseController {
 
 		// Make sure the user is logged in. 
 		$this->beforeFilter('Sentinel\auth');
+
+		// If neccessary, make sure the current user owns 
+		// the specified contact before proceeding
+		$this->beforeFilter('my:contact', 
+			array('only' => array('show', 'edit', 'update', 'destroy'))
+		);
+
 	}
 
 	/**
@@ -51,7 +58,7 @@ class ContactController extends \BaseController {
 	 */
 	public function store()
 	{
-		// attempt validation
+		// Attempt to save the new contact
 		if ($this->contact->store(Input::all()))
 		{
 		    // success 
@@ -77,6 +84,7 @@ class ContactController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		// Show the "View Contact Details" page
 		$contact = $this->contact->byId($id);
 
 		return View::make('contacts.show')->with('contact', $contact);
@@ -91,7 +99,10 @@ class ContactController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		//Show the "Edit Contact" form
+		$contact = $this->contact->byId($id);
+
+		return View::make('contacts.edit')->with('contact', $contact);
 	}
 
 
@@ -103,7 +114,21 @@ class ContactController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		// Attempt to update the contact
+		if ($this->contact->update(Input::all() + array('id' => $id)))
+		{
+		    // success 
+		    Session::flash('success', $this->contact->getMessage());
+			return Redirect::to(Input::get('redirect'));
+		}
+		else
+		{
+		    // there was a problem
+		    Session::flash('error', $this->contact->getMessage());
+            return Redirect::url('ContactController@edit', $id)
+                ->withInput()
+                ->withErrors( $this->contact->getErrors() );
+		}
 	}
 
 
@@ -116,6 +141,19 @@ class ContactController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+		// Permissions Check
+		
+
+		if ($this->client->destroy($id))
+		{
+			Session::flash('success', 'Client Deleted');
+            return Redirect::to('/clients');
+        }
+        else 
+        {
+        	Session::flash('error', 'Unable to Delete Client');
+            return Redirect::to('/clients');
+        }
 	}
 
 
