@@ -33,19 +33,35 @@
 			<ul class="right">
 				 @if (Sentry::check())
 					<li {{ (Request::is('users/show/' . Session::get('userId')) ? 'class="active"' : '') }}><a href="/users/{{ Session::get('userId') }}">{{ Session::get('email') }}</a></li>
+					<li class="divider hide-for-small"></li>
 					<li><a href="{{ URL::route('Sentinel\logout') }}">Logout</a></li>
 					@else
 					<li {{ (Request::is('login') ? 'class="active"' : '') }}><a href="{{ URL::route('Sentinel\login') }}">Login</a></li>
+					<li class="divider hide-for-small"></li>
 					<li {{ (Request::is('register') ? 'class="active"' : '') }}><a href="{{ URL::route('Sentinel\register') }}">Register</a></li>
 				@endif
 			</ul>
 
 			<!-- Left Nav Section -->
 			<ul class="left">
+				<li class="divider hide-for-small"></li>
+				<li {{ (Request::is('broadcast')  ? 'class="active"' : '') }}><a href="/#">Broadcast</a></li>
+				<li class="divider hide-for-small"></li>
+				<li {{ (Request::is('contacts*')  ? 'class="active"' : '') }}><a href="{{ action('ContactController@index') }}">Contacts</a></li>
+				<li class="divider hide-for-small"></li>
+				<li {{ (Request::is('distributions*')  ? 'class="active"' : '') }}><a href="/#">Lists</a></li>
+
 				@if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-					<li {{ (Request::is('users*') ? 'class="active"' : '') }}><a href="{{ URL::action('Sentinel\UserController@index') }}">Users</a></li>
-					<li {{ (Request::is('groups*') ? 'class="active"' : '') }}><a href="{{ URL::action('Sentinel\GroupController@index') }}">Groups</a></li>
+					<li class="divider hide-for-small"></li>
+					<li class="has-dropdown">
+						<a href="#">Admin</a>
+						<ul class="dropdown">
+						  	<li {{ (Request::is('users*') ? 'class="active"' : '') }}><a href="{{ URL::action('Sentinel\UserController@index') }}">Users</a></li>
+							<li {{ (Request::is('groups*') ? 'class="active"' : '') }}><a href="{{ URL::action('Sentinel\GroupController@index') }}">Groups</a></li>
+						</ul>
+					</li>
 				@endif
+
 			</ul>
 		</section>
 	</nav>
