@@ -36,16 +36,6 @@ class Contact extends BaseModel {
         return $this->belongsToMany('Distribution');
     }
 
-    /**
-     * Set a Query Scope for the User Id
-     * @param  [type] $query [description]
-     * @return [type]        [description]
-     */
-    public function scopeCurrentUser( $query )
-    {
-    	return $query->where('user_id', \Session::get('userId'));
-    }
-
 	/**
 	 * Validation Rules
 	 * 

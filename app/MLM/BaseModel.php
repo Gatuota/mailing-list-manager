@@ -74,4 +74,14 @@ class BaseModel extends \Eloquent
     {
         return $this->errors;
     }
+
+    /**
+     * Set a Query Scope for the User Id
+     * @param  [type] $query [description]
+     * @return [type]        [description]
+     */
+    public function scopeCurrentUser( $query )
+    {
+        return $query->where('user_id', \Session::get('userId'));
+    }
 }
