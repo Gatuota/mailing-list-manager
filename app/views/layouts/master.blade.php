@@ -50,7 +50,7 @@
 					<li class="divider hide-for-small"></li>
 					<li {{ (Request::is('contacts*')  ? 'class="active"' : '') }}><a href="{{ action('ContactController@index') }}">Contacts</a></li>
 					<li class="divider hide-for-small"></li>
-					<li {{ (Request::is('distributions*')  ? 'class="active"' : '') }}><a href="/#">Lists</a></li>
+					<li {{ (Request::is('distributions*')  ? 'class="active"' : '') }}><a href="{{ action('DistributionController@index') }}">Lists</a></li>
 				@endif
 
 				@if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
