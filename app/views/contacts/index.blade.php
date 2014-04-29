@@ -40,6 +40,9 @@ Contacts
 		</tbody>
 	</table>
 </div>
+<div class="row">
+	{{ $contacts->links('layouts.pagination') }}
+</div>
 
 
 @stop

@@ -9,6 +9,7 @@ class EloquentContact implements ContactInterface {
 	protected $contact;
 	protected $session;
 	private $message;
+	private $perPage = 10;
 
 	/**
 	 * Construct a new SentryClient Object
@@ -118,7 +119,7 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function byUser( $user_id )
 	{
-		return $this->contact->currentUser( $user_id )->get();
+		return $this->contact->currentUser( $user_id )->orderBy('lastName', 'asc')->orderBy('email', 'asc')->paginate( $this->perPage );
 	}
 
 	/**
@@ -150,3 +151,4 @@ class EloquentContact implements ContactInterface {
 	}
 
 }
+
