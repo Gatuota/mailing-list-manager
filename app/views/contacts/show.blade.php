@@ -34,7 +34,7 @@ Contact Details
       <div class="large-3 columns">
         <dl>
             <dt>Date Added</dt>
-            <dl>{{{ $contact->created_at }}}</dl>
+            <dl>{{{ $contact->created_at->format('F jS, Y h:ia')  }}}</dl>
         </dl>
 
         <button class="button small" href="{{ action('ContactController@edit', $contact->id) }}">Edit</button>
