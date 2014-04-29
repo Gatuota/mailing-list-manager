@@ -14,7 +14,7 @@ class Distribution extends BaseModel {
 	 * 
 	 * @var array
 	 */
-	protected $guarded = array('id')
+	protected $guarded = array('id');
 
 	/**
 	 * Define the Contact/User Relationship (One to Many)
@@ -41,7 +41,7 @@ class Distribution extends BaseModel {
 	 * 
 	 * @var array
 	 */
-	private $rules = array(
+	protected $rules = array(
         'email'  	=> 'required|email',
         'user_id'  	=> 'required',
     );

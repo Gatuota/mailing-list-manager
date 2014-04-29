@@ -28,3 +28,12 @@ Route::get('contacts/{id}', 'ContactController@show');
 Route::get('contacts/{id}/edit', 'ContactController@edit');
 Route::put('contacts/{id}', 'ContactController@update');
 Route::delete('contacts/{id}', 'ContactController@destroy');
+
+// Distribution Routes
+Route::get('distributions', 'DistributionController@index');
+Route::get('distributions/new', 'DistributionController@create');
+Route::post('distributions', 'DistributionController@store');
+Route::get('distributions/{id}', 'DistributionController@show');
+Route::get('distributions/{id}/edit', 'DistributionController@edit');
+Route::put('distributions/{id}', 'DistributionController@update');
+Route::delete('distributions/{id}', 'DistributionController@destroy');
