@@ -47,6 +47,6 @@ interface ContactInterface {
 	 * @param  integer $user_id
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
-	public function byUser($user_id);
+	public function all();
 
 }

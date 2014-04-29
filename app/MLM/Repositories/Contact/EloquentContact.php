@@ -108,7 +108,7 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function byEmail( $email )
 	{
-
+		return $this->contact->currentUser()->where('email', $email)->first();
 	}
 
 	/**
@@ -117,9 +117,9 @@ class EloquentContact implements ContactInterface {
 	 * @param  integer $user_id
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
-	public function byUser( $user_id )
+	public function all()
 	{
-		return $this->contact->currentUser( $user_id )->orderBy('lastName', 'asc')->orderBy('email', 'asc')->paginate( $this->perPage );
+		return $this->contact->currentUser()->orderBy('lastName', 'asc')->orderBy('email', 'asc')->paginate( $this->perPage );
 	}
 
 	/**

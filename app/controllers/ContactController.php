@@ -32,7 +32,7 @@ class ContactController extends \BaseController {
 	public function index()
 	{
 		// Pull all the contacts for this user.
-		$contacts = $this->contact->byUser(Session::get('userId'));
+		$contacts = $this->contact->all();
 
 		// Show the Contacts Index View
 		return View::make('contacts.index')->with('contacts', $contacts);
