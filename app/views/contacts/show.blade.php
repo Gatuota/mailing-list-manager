@@ -3,7 +3,7 @@
 {{-- Web site Title --}}
 @section('title')
 @parent
-New Contact
+Contact Details
 @stop
 
 {{-- Content --}}

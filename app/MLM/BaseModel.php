@@ -16,9 +16,10 @@ class BaseModel extends \Eloquent
             return ($model->validate());
         });
 
-        static::updating(function($post)
+        static::updating(function($model)
         {
-            
+            // attempt validation
+            return ($model->validate());
         });
     }
 

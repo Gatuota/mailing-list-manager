@@ -31,7 +31,9 @@ Contacts
 				<tr>
 					<td><a href="{{ action('ContactController@show', $contact->id) }}">{{{ $contact->firstName . " " . $contact->middleName . " " . $contact->lastName }}}</a></td>
 					<td>{{{ $contact->email }}}</td>
-					<td></td>
+					<td>
+						<button class="button small" type="button" onClick="location.href='{{ action('ContactController@edit', array($contact->id)) }}'">Edit</button> 
+					</td>
 				</tr>
 			@endforeach
 		</tbody>

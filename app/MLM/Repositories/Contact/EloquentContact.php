@@ -13,7 +13,7 @@ class EloquentContact implements ContactInterface {
 	/**
 	 * Construct a new SentryClient Object
 	 */
-	public function __construct(Model $contact, Store $session)
+	public function __construct( Model $contact, Store $session )
 	{
 		$this->contact = $contact;
 		$this->session = $session;
@@ -24,11 +24,9 @@ class EloquentContact implements ContactInterface {
 	 *
 	 * @return Boolean 
 	 */
-	public function store($data)
+	public function store( $data )
 	{
-		$data['user_id'] = $this->session->get('userId');
-
-		$contact = new Contact($data);
+		$contact = new Contact( $data + array('user_id' => $this->session->get( 'userId' )));
 
 		// attempt validation
 		if ($contact->save())
@@ -52,9 +50,25 @@ class EloquentContact implements ContactInterface {
 	 * @param  int  $id
 	 * @return Boolean
 	 */
-	public function update($id)
+	public function update( $data )
 	{
+		$data['user_id'] = $this->session->get( 'userId' );
 
+		$contact = $this->contact->find( $data['id'] );
+
+		// attempt validation
+		if ($contact->update( $data ))
+		{
+		    // success code
+		    return $contact;
+		}
+		else
+		{
+		    $this->message = 'There was a problem updating this contact.';
+            $this->errors = $contact->errors();
+
+            return false;
+		}
 	}
 
 	/**
@@ -63,7 +77,7 @@ class EloquentContact implements ContactInterface {
 	 * @param  int  $id
 	 * @return Boolean
 	 */
-	public function destroy($id)
+	public function destroy( $contact_id )
 	{
 
 	}
@@ -74,9 +88,9 @@ class EloquentContact implements ContactInterface {
 	 * @param  integer $id
 	 * @return Illuminate\Database\Eloquent\Model
 	 */
-	public function byId($id)
+	public function byId( $contact_id )
 	{
-		return $this->contact->find($id);
+		return $this->contact->find( $contact_id );
 	}
 
 	/**
@@ -85,7 +99,7 @@ class EloquentContact implements ContactInterface {
 	 * @param  string $email
 	 * @return Illuminate\Database\Eloquent\Model
 	 */
-	public function byEmail($email)
+	public function byEmail( $email )
 	{
 
 	}
@@ -96,21 +110,37 @@ class EloquentContact implements ContactInterface {
 	 * @param  integer $user_id
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
-	public function byUser($user_id)
+	public function byUser( $user_id )
 	{
-		return $this->contact->currentUser($user_id)->get();
+		return $this->contact->currentUser( $user_id )->get();
 	}
 
-
+	/**
+	 * Return the Validator response message bag
+	 * @return Illuminate\Support\MessageBag
+	 */
 	public function getMessage()
 	{
 		return $this->message;
 	}
 
-
+	/**
+	 * Return the Validator errors
+	 * @return [type] [description]
+	 */
 	public function getErrors()
 	{
 		return $this->errors;
+	}
+
+	/**
+	 * Check to see if this contact belongs to the current user.
+	 * @param  integer $user_id 
+	 * @return boolean 
+	 */
+	public function mine( $contact_id )
+	{
+		return ( $this->byId( $contact_id )->user_id == $this->session->get( 'userId' ) );
 	}
 
 }
