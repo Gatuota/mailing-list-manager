@@ -44,12 +44,14 @@
 
 			<!-- Left Nav Section -->
 			<ul class="left">
-				<li class="divider hide-for-small"></li>
-				<li {{ (Request::is('broadcast')  ? 'class="active"' : '') }}><a href="/#">Broadcast</a></li>
-				<li class="divider hide-for-small"></li>
-				<li {{ (Request::is('contacts*')  ? 'class="active"' : '') }}><a href="{{ action('ContactController@index') }}">Contacts</a></li>
-				<li class="divider hide-for-small"></li>
-				<li {{ (Request::is('distributions*')  ? 'class="active"' : '') }}><a href="/#">Lists</a></li>
+				@if (Sentry::check())
+					<li class="divider hide-for-small"></li>
+					<li {{ (Request::is('broadcast')  ? 'class="active"' : '') }}><a href="/#">Broadcast</a></li>
+					<li class="divider hide-for-small"></li>
+					<li {{ (Request::is('contacts*')  ? 'class="active"' : '') }}><a href="{{ action('ContactController@index') }}">Contacts</a></li>
+					<li class="divider hide-for-small"></li>
+					<li {{ (Request::is('distributions*')  ? 'class="active"' : '') }}><a href="/#">Lists</a></li>
+				@endif
 
 				@if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
 					<li class="divider hide-for-small"></li>
