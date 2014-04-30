@@ -63,5 +63,14 @@ New List
         </div>
     </div>            
 {{ Form::close() }}
+@stop
 
+@section('scripts')
+    <script src="{{ asset('js/vendor/selectize.js') }}"></script>
+    <script src="{{ asset('js/vendor/selectize.jquery.js') }}"></script>
+@stop 
+
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/selectize.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/selectize.default.css') }}">
 @stop

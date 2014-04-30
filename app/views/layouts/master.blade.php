@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/foundation.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+	@yield('styles')
 
 	<script src="{{ asset('js/vendor/modernizr.js') }}"></script>
 	
@@ -82,5 +83,6 @@
 	<script>
 		$(document).foundation();
 	</script>
+	@yield('scripts')
 </body>
 </html>
