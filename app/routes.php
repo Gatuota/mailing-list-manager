@@ -36,7 +36,9 @@ Route::post('distributions', 'DistributionController@store');
 Route::get('distributions/{id}', 'DistributionController@show');
 Route::get('distributions/{id}/edit', 'DistributionController@edit');
 Route::put('distributions/{id}', 'DistributionController@update');
-Route::delete('distributions/{id}', 'DistributionController@destroy');
+Route::put('distributions/{id}/deactivate', 'DistributionController@deactivate');
+Route::put('distributions/{id}/activate', 'DistributionController@activate');
+Route::delete('distributions/{id}/destroy', 'DistributionController@destroy');
 
 // Ajax Routes
 Route::group(array('prefix' => 'ajax'), function()

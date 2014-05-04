@@ -30,13 +30,21 @@ Lists
 		<tbody>
 			@foreach ($distributions as $distribution)
 				<tr>
-					<td>
+					<td {{ ( $distribution->trashed() ? "class='strikethrough'" : " " ) }}>
 						<a href="{{ action('DistributionController@show', $distribution->id) }}">{{{ $distribution->name }}}</a>
 					</td>
-					<td>{{ $distribution->replyTo }}</td>
-					<td></td>
+					<td {{ ( $distribution->trashed() ? "class='strikethrough'" : " " ) }}>
+						{{ $distribution->replyTo }}</td>
+					<td {{ ( $distribution->trashed() ? "class='strikethrough'" : " " ) }}>
+
+					</td>
 					<td>
-						<button class="button small" type="button" onClick="location.href='{{ action('DistributionController@edit', array($distribution->id)) }}'">Edit</button> 
+						<button class="button small" type="button" onClick="location.href='{{ action('DistributionController@edit', array($distribution->id)) }}'">Edit</button>
+						@if (! $distribution->trashed())
+							<button class="button small action_confirm" type="button" href="{{ action('DistributionController@deactivate', array($distribution->id)) }}" data-token="{{ Session::getToken() }}" data-method="put">Deactivate</button> 
+						@else 
+							<button class="button small action_confirm" type="button" href="{{ action('DistributionController@activate', array($distribution->id)) }}" data-token="{{ Session::getToken() }}" data-method="put">Activate</button>
+						@endif
 						<button class="button small alert action_confirm" href="{{ action('DistributionController@destroy', array($distribution->id)) }}" data-token="{{ Session::getToken() }}" data-method="delete">Delete</button>
 					</td>
 				</tr>
@@ -47,6 +55,5 @@ Lists
 <div class="row">
 	{{ $distributions->links('layouts.pagination') }}
 </div>
-
 
 @stop

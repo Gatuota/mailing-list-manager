@@ -5,3 +5,7 @@
 .full-width {
 	width: 100%;
 }
+
+.strikethrough {
+	text-decoration: line-through;
+}

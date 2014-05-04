@@ -50,8 +50,17 @@ List Details
       <div class="small-3 columns">
         <dl>
             <dt>Date Added</dt>
-            <dl>{{{ $distribution->created_at->format('F jS, Y h:ia') }}}</dl>
+            <dd>{{{ $distribution->created_at->format('F jS, Y h:ia') }}}</dd>
         </dl>
+        <dl>
+            <dt>Status</dt>
+            @if ($distribution->trashed())
+                <dd>Disabled</dd>
+            @else
+                <dd>Active</dd>
+            @endif
+        </dl>
+        
         <button class="button small" type="button" onClick="location.href='{{ action('DistributionController@edit', array($distribution->id)) }}'">Edit</button>
         <button class="button small alert action_confirm" href="{{ action('ContactController@destroy', array($distribution->id)) }}" data-token="{{ Session::getToken() }}" data-method="delete">Delete</button>
       </div>

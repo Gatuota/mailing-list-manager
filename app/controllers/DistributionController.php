@@ -146,6 +146,48 @@ class DistributionController extends \BaseController {
 
 
 	/**
+	 * De-activate the distribution via a "soft delete"
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function deactivate($id)
+	{
+		// Attempt to delete this distribution
+		if ($this->distribution->deactivate($id))
+		{
+			Session::flash('success', 'List Deactivated');
+            return Redirect::action('DistributionController@index');
+        }
+        else 
+        {
+        	Session::flash('error', 'Unable to deactivate List');
+            return Redirect::action('DistributionController@index');
+        }
+	}
+
+	/**
+	 * Re-activate the distribution by restoring from a "soft delete"
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function activate($id)
+	{
+		// Attempt to delete this distribution
+		if ($this->distribution->activate($id))
+		{
+			Session::flash('success', 'List Activated');
+            return Redirect::action('DistributionController@index');
+        }
+        else 
+        {
+        	Session::flash('error', 'Unable to activate List');
+            return Redirect::action('DistributionController@index');
+        }
+	}
+
+	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id

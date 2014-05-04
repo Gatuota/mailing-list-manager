@@ -86,6 +86,40 @@ class EloquentDistribution implements DistributionInterface {
 	}
 
 	/**
+	 * Trigger a "soft delete" for the specified distribution.
+	 *
+	 * @param  int  $id
+	 * @return Boolean
+	 */
+	public function deactivate( $distribution_id )
+	{
+		// Fetch Distribution from DB
+		$distribution = $this->byId($distribution_id);
+
+		// Destroy the distribution 
+		$distribution->delete();
+
+		return true;
+	}
+
+	/**
+	 * Restore from a soft delete
+	 *
+	 * @param  int  $id
+	 * @return Boolean
+	 */
+	public function activate( $distribution_id )
+	{
+		// Fetch Distribution from DB
+		$distribution = $this->byId($distribution_id);
+
+		// Destroy the distribution 
+		$distribution->restore();
+
+		return true;
+	}
+
+	/**
 	 * Remove the specified distribution.
 	 *
 	 * @param  int  $id
@@ -97,7 +131,7 @@ class EloquentDistribution implements DistributionInterface {
 		$distribution = $this->byId($distribution_id);
 
 		// Destroy the distribution 
-		$distribution->delete();
+		$distribution->$user->forceDelete();
 
 		return true;
 	}
@@ -110,7 +144,7 @@ class EloquentDistribution implements DistributionInterface {
 	 */
 	public function byId( $distribution_id )
 	{
-		return $this->distribution->with('contacts')->find( $distribution_id );
+		return $this->distribution->withTrashed()->with('contacts')->find( $distribution_id );
 	}
 
 	/**
@@ -120,6 +154,17 @@ class EloquentDistribution implements DistributionInterface {
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function all( )
+	{
+		return $this->distribution->withTrashed()->currentUser()->orderBy('created_at', 'asc')->paginate( $this->perPage );
+	}
+
+	/**
+	 * Return all the active distributions associated with a given user
+	 *
+	 * @param  integer $user_id
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function active( )
 	{
 		return $this->distribution->currentUser()->orderBy('created_at', 'asc')->paginate( $this->perPage );
 	}
