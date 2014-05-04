@@ -108,7 +108,7 @@ class EloquentDistribution implements DistributionInterface {
 	 */
 	public function byId( $distribution_id )
 	{
-		return $this->distribution->find( $distribution_id );
+		return $this->distribution->with('contacts')->find( $distribution_id );
 	}
 
 	/**
