@@ -39,7 +39,7 @@ class Distribution extends BaseModel {
      */
     public function contacts()
     {
-        return $this->belongsToMany('MLM\Contact');
+        return $this->belongsToMany('MLM\Contact')->withPivot('method');;
     }
 
 	/**
