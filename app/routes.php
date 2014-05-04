@@ -37,3 +37,10 @@ Route::get('distributions/{id}', 'DistributionController@show');
 Route::get('distributions/{id}/edit', 'DistributionController@edit');
 Route::put('distributions/{id}', 'DistributionController@update');
 Route::delete('distributions/{id}', 'DistributionController@destroy');
+
+// Ajax Routes
+Route::group(array('prefix' => 'ajax'), function()
+{
+    // Contacts
+    Route::get('contacts/search', 'ContactController@ajaxSearch');
+});
