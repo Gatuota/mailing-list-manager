@@ -100,7 +100,22 @@ class DistributionController extends \BaseController {
 		// Show the "Edit Distribution" form
 		$distribution = $this->distribution->byId($distribution_id);
 
-		return View::make('distributions.edit')->with('distribution', $distribution);
+		// Prepare the contacts lists, organized by 'method'
+		// array('L' => 'Large', 'S' => 'Small')
+		$contacts = array();
+
+		foreach ($distribution->contacts as $contact)
+		{
+			$displayName = $contact->firstName . ' ' . $contact->middleName . ' ' . $contact->lastName;
+			
+			$contacts[$contact->pivot->method][$contact->id] = array(
+				'displayName' => $displayName, 
+				'id' => $contact->id, 
+				'email' => $contact->email
+			);
+		}
+
+		return View::make('distributions.edit')->with('distribution', $distribution)->with('contacts', $contacts);
 	}
 
 

@@ -152,9 +152,7 @@ class EloquentDistribution implements DistributionInterface {
 
 
 	private function prepareContactSync($names)
-	{
-		
-
+	{	
 		$syncContainer = array();
 
 		foreach ($names as $method => $contacts) {
@@ -162,8 +160,6 @@ class EloquentDistribution implements DistributionInterface {
 			{
 				continue;
 			}
-
-			$contacts = explode(',', $contacts);
 
 			foreach ($contacts as $contact_id) {
 

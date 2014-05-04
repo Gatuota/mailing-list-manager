@@ -58,9 +58,17 @@ Edit List
                     <label for="right-label" class="right inline">Contacts</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-
-                {{ Form::text('names[normal]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
-                {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
+                    <select name="names[normal][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                        @if (isset($contacts['normal']) && count($contacts['normal']) != 0)
+                            @foreach($contacts['normal'] as $id => $contact)
+                                <option value="{{{ $id }}}" data-data="{{{ json_encode($contact) }}}" selected>
+                                    {{{ $contact['email'] }}}
+                                </option>;
+                            @endforeach
+                        @endif
+                    </select>
+                
+                    {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
             </div>
@@ -70,10 +78,16 @@ Edit List
                     <label for="right-label" class="right inline">CC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-
-                {{ Form::text('names[cc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                    <select name="names[cc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                        @if (isset($contacts['cc']) && count($contacts['cc']) != 0)
+                            @foreach($contacts['cc'] as $id => $contact)
+                                <option value="{{{ $id }}}" data-data="{{{ json_encode($contact) }}}" selected>
+                                    {{{ $contact['email'] }}}
+                                </option>;
+                            @endforeach
+                        @endif
+                    </select>
                 {{ ($errors->has('names[cc]') ? $errors->first('names[cc]', '<small class="error">:message</small>') : '') }}
-                    
                 </div>
             </div>
 
@@ -82,8 +96,15 @@ Edit List
                     <label for="right-label" class="right inline">BCC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-
-                {{ Form::text('names[bcc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                    <select name="names[bcc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                        @if (isset($contacts['bcc']) && count($contacts['bcc']) != 0)
+                            @foreach($contacts['bcc'] as $id => $contact)
+                                <option value="{{{ $id }}}" data-data="{{{ json_encode($contact) }}}" selected>
+                                    {{{ $contact['email'] }}}
+                                </option>;
+                            @endforeach
+                        @endif
+                    </select>
                 {{ ($errors->has('names[bcc]') ? $errors->first('names[bcc]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
@@ -110,24 +131,26 @@ Edit List
                 // Tell Selectize to use a remote data source for the autosuggest options
                 plugins: ['remove_button'],
                 persist: false,
-                delimiter: ',',
                 maxItems: null,
                 valueField: 'id',
                 labelField: 'name',
+                dataAttr: 'data-data',
                 searchField: ['displayName', 'email'],
                 render: {
                     item: function(item, escape) {
+                        console.log('item');
+                        console.log(item);
                         var title = item.displayName || item.email;
                         return '<div>' +
                             '<span class="contact_item">' + 
-                            (item.displayName != ' ' ? escape(item.displayName) : escape(item.email) ) + 
+                            (item.displayName.replace(/^[\s\t]+/,"").length  != 0 ? escape(item.displayName) : escape(item.email) ) + 
                             '</span></div>';
                     },
                     option: function(item, escape) {
                         console.log(item);
                         return '<div>' +
                             '<span class="option_item">' + 
-                            (item.displayName != ' ' ? escape(item.displayName) : escape(item.email) ) + 
+                            (item.displayName.replace(/^[\s\t]+/,"").length  != 0 ? escape(item.displayName) : escape(item.email) ) + 
                             '</span></div>';
                     }
                 },
