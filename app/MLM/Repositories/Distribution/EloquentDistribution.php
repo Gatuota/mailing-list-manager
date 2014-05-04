@@ -61,6 +61,8 @@ class EloquentDistribution implements DistributionInterface {
 	 */
 	public function update( $data )
 	{
+		
+
 		$data['user_id'] = $this->session->get( 'userId' );
 
 		$distribution = $this->distribution->find( $data['id'] );

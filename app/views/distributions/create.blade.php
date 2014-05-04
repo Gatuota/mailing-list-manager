@@ -58,10 +58,9 @@ New List
                     <label for="right-label" class="right inline">Contacts</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-
-                {{ Form::text('names[normal]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
-                {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
-                    
+                    <select name="names[normal][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                    </select>
+                    {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
                 </div>
             </div>
 
@@ -70,9 +69,9 @@ New List
                     <label for="right-label" class="right inline">CC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-
-                {{ Form::text('names[cc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
-                {{ ($errors->has('names[cc]') ? $errors->first('names[cc]', '<small class="error">:message</small>') : '') }}
+                    <select name="names[cc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                    </select>
+                    {{ ($errors->has('names[cc]') ? $errors->first('names[cc]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
             </div>
@@ -82,9 +81,9 @@ New List
                     <label for="right-label" class="right inline">BCC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-
-                {{ Form::text('names[bcc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
-                {{ ($errors->has('names[bcc]') ? $errors->first('names[bcc]', '<small class="error">:message</small>') : '') }}
+                    <select name="names[bcc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                    </select>
+                    {{ ($errors->has('names[bcc]') ? $errors->first('names[bcc]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
             </div>
