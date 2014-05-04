@@ -16,11 +16,25 @@ List Details
     <div class="row">
       <div class="small-3 columns panel callout radius">
         <h4>Names</h4>
-        <ul>
-            <li>One</li>
-            <li>Two</li>
-            <li>Three</li>
-        </ul>
+        @if (count($distribution->contacts) != 0)
+            <ul>
+                @foreach ($distribution->contacts as $contact)
+                    <li>
+                        <?php $displayName = $contact->firstName . ' ' . $contact->middleName . ' ' . $contact->lastName;?>
+                        @if (! empty(trim($displayName)))
+                            {{{ $displayName }}}
+                        @else
+                            {{{$contact->email}}}
+                        @endif
+                        @if ($contact->pivot->method != 'normal')
+                            {{{ "- " . strtoupper($contact->pivot->method) }}}
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        @else 
+            <p>No Contacts</p>
+        @endif
       </div>
       <div class="small-6 columns">
         <p>
