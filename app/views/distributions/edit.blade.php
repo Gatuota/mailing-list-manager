@@ -79,7 +79,7 @@ Edit List
 
             <div class="row">
                 <div class="small-3 columns">
-                    <label for="right-label" class="right inline">bcc</label>
+                    <label for="right-label" class="right inline">BCC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
 
