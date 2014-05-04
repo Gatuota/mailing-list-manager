@@ -2,7 +2,6 @@
 
 class Distribution extends BaseModel {
 
-
 	/**
 	 * Mass assigment can be used for these table columns
 	 * 
@@ -16,6 +15,12 @@ class Distribution extends BaseModel {
 	 * @var array
 	 */
 	protected $guarded = array('id');
+
+	/**
+	 * Allow for Soft Deleting of Distributions
+	 * 
+	 */
+	protected $softDelete = true;
 
 	/**
 	 * Define the Contact/User Relationship (One to Many)

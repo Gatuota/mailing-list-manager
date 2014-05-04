@@ -21,6 +21,7 @@ class CreateDistributionsTable extends Migration {
 			$table->text('body');
 			$table->boolean('active');
 			$table->integer('user_id')->references('id')->on('users');
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}
