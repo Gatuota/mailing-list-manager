@@ -30,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider {
         {
             return new EloquentDistribution(
             	new Distribution,
+                $app->make('MLM\Repositories\Contact\ContactInterface'),
             	$app['session.store']
             );
         });

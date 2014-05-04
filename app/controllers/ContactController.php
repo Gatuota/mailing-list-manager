@@ -153,4 +153,30 @@ class ContactController extends \BaseController {
 	}
 
 
+	public function ajaxSearch()
+	{
+		// Retrieve user's input ('q' query parameter)
+		$query = Input::get('q','');
+
+		// If the input is empty, return empty JSON response
+		if (trim(urldecode($query)) == '') return Response::json(['data' => ['']], 200);
+
+
+		$data = array();
+		$email_address = array();
+		foreach ($this->contact->search($query) as $contact)
+		{
+			$email_address['firstName'] = $contact->firstName;
+			$email_address['lastName'] = $contact->lastName;
+			$email_address['displayName'] = $contact->firstName . " " . $contact->lastName;
+			$email_address['id'] = $contact->id;
+			$email_address['email'] = $contact->email; 
+
+			$data[] = $email_address;
+		}
+
+		return Response::json($data);
+	}
+
+
 }

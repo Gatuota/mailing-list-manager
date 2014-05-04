@@ -150,5 +150,20 @@ class EloquentContact implements ContactInterface {
 		return ( $this->byId( $contact_id )->user_id == $this->session->get( 'userId' ) );
 	}
 
+	public function search($query)
+	{		
+		return $this->contact
+			->currentUser()
+			->where('firstName','like','%'.$query.'%')
+			->orWhere('middleName', 'like','%'.$query.'%')
+			->orWhere('lastName', 'like','%'.$query.'%')
+			->orWhere('email', 'like','%'.$query.'%')
+			->orderBy('lastName','asc')
+			->orderBy('email','asc')
+			->select('id', 'firstName', 'lastName', 'email')
+			->take(10)
+			->get();
+	}
+
 }
 

@@ -2,6 +2,7 @@
 
 class Distribution extends BaseModel {
 
+
 	/**
 	 * Mass assigment can be used for these table columns
 	 * 
@@ -31,9 +32,9 @@ class Distribution extends BaseModel {
      * 
      * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function distribution()
+    public function contacts()
     {
-        return $this->belongsToMany('Distribution');
+        return $this->belongsToMany('MLM\Contact');
     }
 
 	/**
@@ -46,5 +47,6 @@ class Distribution extends BaseModel {
         'replyTo'  	=> 'required|email',
         'user_id'  	=> 'required',
     );
+
 
 }

@@ -151,5 +151,4 @@ class DistributionController extends \BaseController {
         }
 	}
 
-
 }

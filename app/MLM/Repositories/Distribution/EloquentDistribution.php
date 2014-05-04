@@ -2,11 +2,13 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Session\Store;
+use MLM\Repositories\Contact\ContactInterface;
 use MLM\Distribution;
 
 class EloquentDistribution implements DistributionInterface {
 	
 	protected $distribution;
+	protected $contact;
 	protected $session;
 	private $message;
 	private $perPage = 10;
@@ -14,9 +16,10 @@ class EloquentDistribution implements DistributionInterface {
 	/**
 	 * Construct a new SentryClient Object
 	 */
-	public function __construct( Model $distribution, Store $session )
+	public function __construct( Model $distribution, ContactInterface $contact, Store $session )
 	{
 		$this->distribution = $distribution;
+		$this->contact = $contact;
 		$this->session = $session;
 	}
 
@@ -62,6 +65,10 @@ class EloquentDistribution implements DistributionInterface {
 		// attempt validation
 		if ($distribution->update( $data ))
 		{
+		   	// Update the contacts associated with the list. 
+		    //$this->syncContacts(Input::get('names'));
+			$distribution->contacts()->sync($this->prepareContactSync($data['names']));
+
 		    // success code
 		    return $distribution;
 		}
@@ -139,6 +146,30 @@ class EloquentDistribution implements DistributionInterface {
 	public function mine( $distribution_id )
 	{
 		return ( $this->byId( $distribution_id )->user_id == $this->session->get( 'userId' ) );
+	}
+
+
+	private function prepareContactSync($names)
+	{
+		$syncContainer = array();
+
+		foreach ($names as $method => $contacts) {
+			$contacts = explode(',', $contacts);
+
+			foreach ($contacts as $contact_id) {
+		    	if (is_numeric($contact_id))
+		    	{
+		    		$syncContainer[$contact_id]  = array('method' => $method);
+		    	}
+		    	else 
+		    	{
+		    		$contact = $this->contact->store(array('email' => $contact_id));
+					$syncContainer[$contact->id] = array('method' => $method);
+		    	}
+		    }
+		}
+
+	    return $syncContainer;
 	}
 
 }
