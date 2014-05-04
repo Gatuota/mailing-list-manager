@@ -14,8 +14,10 @@ class CreateContactDistributionTable extends Migration {
 	{
 		Schema::create('contact_distribution', function(Blueprint $table)
 		{
-			$table->integer('contact_id')->references('id')->on('contacts');
-			$table->integer('distribution_id')->references('id')->on('distributions');
+			$table->integer('contact_id')->unsigned();
+			$table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+			$table->integer('distribution_id')->unsigned();
+			$table->foreign('distribution_id')->references('id')->on('distributions')->onDelete('cascade');
 			$table->string('method');
 		});
 	}
