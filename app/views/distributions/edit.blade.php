@@ -59,8 +59,32 @@ Edit List
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
 
-                {{ Form::text('names[normal]', NULL, array('placeholder' => 'Name or Email', 'id' => 'names')) }}
-                {{ ($errors->has('names') ? $errors->first('names', '<small class="error">:message</small>') : '') }}
+                {{ Form::text('names[normal]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-3 columns">
+                    <label for="right-label" class="right inline">CC</label>
+                </div>
+                <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
+
+                {{ Form::text('names[cc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                {{ ($errors->has('names[cc]') ? $errors->first('names[cc]', '<small class="error">:message</small>') : '') }}
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-3 columns">
+                    <label for="right-label" class="right inline">bcc</label>
+                </div>
+                <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
+
+                {{ Form::text('names[bcc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                {{ ($errors->has('names[bcc]') ? $errors->first('names[bcc]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
             </div>
@@ -82,7 +106,7 @@ Edit List
     <script>
             var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
                   '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
-            $('#names').selectize({
+            $('.contactsearch').selectize({
                 // Tell Selectize to use a remote data source for the autosuggest options
                 plugins: ['remove_button'],
                 persist: false,

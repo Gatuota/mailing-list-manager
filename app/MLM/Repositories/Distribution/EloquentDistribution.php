@@ -37,7 +37,10 @@ class EloquentDistribution implements DistributionInterface {
 		// attempt validation
 		if ($distribution->save())
 		{
-		    // success code
+		    // Update the contacts associated with the list. 
+			$distribution->contacts()->sync($this->prepareContactSync($data['names']));
+
+		    // all is good!
 		    return $distribution;
 		}
 		else
@@ -66,10 +69,9 @@ class EloquentDistribution implements DistributionInterface {
 		if ($distribution->update( $data ))
 		{
 		   	// Update the contacts associated with the list. 
-		    //$this->syncContacts(Input::get('names'));
 			$distribution->contacts()->sync($this->prepareContactSync($data['names']));
 
-		    // success code
+		    // all is good
 		    return $distribution;
 		}
 		else
@@ -151,20 +153,31 @@ class EloquentDistribution implements DistributionInterface {
 
 	private function prepareContactSync($names)
 	{
+		
+
 		$syncContainer = array();
 
 		foreach ($names as $method => $contacts) {
+			if (empty($contacts)) 
+			{
+				continue;
+			}
+
 			$contacts = explode(',', $contacts);
 
 			foreach ($contacts as $contact_id) {
+
 		    	if (is_numeric($contact_id))
 		    	{
 		    		$syncContainer[$contact_id]  = array('method' => $method);
 		    	}
 		    	else 
 		    	{
-		    		$contact = $this->contact->store(array('email' => $contact_id));
-					$syncContainer[$contact->id] = array('method' => $method);
+					$contact = $this->contact->store(array('email' => $contact_id));
+				
+					$index = (int) $contact->id;
+					
+					$syncContainer[$index] = array('method' => $method);
 		    	}
 		    }
 		}

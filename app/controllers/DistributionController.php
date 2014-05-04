@@ -117,7 +117,7 @@ class DistributionController extends \BaseController {
 		{
 		    // success 
 		    Session::flash('success', $this->distribution->getMessage());
-			return Redirect::to(Input::get('redirect'));
+			return Redirect::to(Input::get('redirect', '/distributions'));
 		}
 		else
 		{

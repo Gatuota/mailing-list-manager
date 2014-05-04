@@ -54,6 +54,42 @@ New List
             </div>
 
             <div class="row">
+                <div class="small-3 columns">
+                    <label for="right-label" class="right inline">Contacts</label>
+                </div>
+                <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
+
+                {{ Form::text('names[normal]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-3 columns">
+                    <label for="right-label" class="right inline">CC</label>
+                </div>
+                <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
+
+                {{ Form::text('names[cc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                {{ ($errors->has('names[cc]') ? $errors->first('names[cc]', '<small class="error">:message</small>') : '') }}
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-3 columns">
+                    <label for="right-label" class="right inline">BCC</label>
+                </div>
+                <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
+
+                {{ Form::text('names[bcc]', NULL, array('placeholder' => 'Name or Email', 'class' => 'contactsearch')) }}
+                {{ ($errors->has('names[bcc]') ? $errors->first('names[bcc]', '<small class="error">:message</small>') : '') }}
+                    
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="small-9 small-offset-3 columns">
                     {{ Form::submit('Save', array('class' => 'button' )) }}
                 </div>
@@ -63,4 +99,79 @@ New List
     </div>            
 {{ Form::close() }}
 
+@stop
+
+@section('scripts')
+    <script src="{{ asset('js/vendor/selectize.min.js') }}"></script>
+    <script>
+            var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+                  '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+            $('.contactsearch').selectize({
+                // Tell Selectize to use a remote data source for the autosuggest options
+                plugins: ['remove_button'],
+                persist: false,
+                delimiter: ',',
+                maxItems: null,
+                valueField: 'id',
+                labelField: 'name',
+                searchField: ['displayName', 'email'],
+                render: {
+                    item: function(item, escape) {
+                        var title = item.displayName || item.email;
+                        return '<div>' +
+                            '<span class="contact_item">' + 
+                            (item.displayName != ' ' ? escape(item.displayName) : escape(item.email) ) + 
+                            '</span></div>';
+                    },
+                    option: function(item, escape) {
+                        console.log(item);
+                        return '<div>' +
+                            '<span class="option_item">' + 
+                            (item.displayName != ' ' ? escape(item.displayName) : escape(item.email) ) + 
+                            '</span></div>';
+                    }
+                },
+                load: function(query, callback) {
+                    // Load options via AJAX
+                    $.ajax({
+                        // Send a GET or POST request providing "query" as the data
+                        // When data is retrieved, execute callback() on that data to
+                        // refresh the list of autosuggest options
+                        url: '/ajax/contacts/search',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            q: query
+                        },
+                        success: function(data) {
+                            callback(data);
+                        }
+                    }); 
+                },
+                create: function(input) {
+                    if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+                        return {email: input, id: input, displayName: ' '};
+                    }
+                    var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));                 
+                    if (match) {
+                        console.log(match);
+                        return {
+                            email : match[2],
+                            name  : $.trim(match[1]),
+                            id    : match[2]
+                        };
+                    }
+                    alert('Invalid email address.');
+                    return false;
+                }
+
+            });
+
+
+    </script>
+@stop 
+
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/selectize.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/selectize.custom.css') }}">
 @stop

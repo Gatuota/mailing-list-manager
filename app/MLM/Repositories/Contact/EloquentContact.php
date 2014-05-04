@@ -27,7 +27,16 @@ class EloquentContact implements ContactInterface {
 	 */
 	public function store( $data )
 	{
-		$contact = new Contact( $data + array('user_id' => $this->session->get( 'userId' )));
+		// Make sure this user doesn't already have a contact with this email address: 
+		$contact = $this->byEmail($data['email']);
+		if ( ! $contact)
+		{
+			$contact = new Contact( $data + array('user_id' => $this->session->get( 'userId' )));
+		}
+		else 
+		{
+			return $contact;
+		}
 
 		// attempt validation
 		if ($contact->save())
