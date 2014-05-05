@@ -40,6 +40,14 @@ Route::put('distributions/{id}/deactivate', 'DistributionController@deactivate')
 Route::put('distributions/{id}/activate', 'DistributionController@activate');
 Route::delete('distributions/{id}/destroy', 'DistributionController@destroy');
 
+//Broadcast Routes
+Route::get('broadcast', 'BroadcastController@create');
+Route::get('broadcast/show', function()
+{
+	return Redirect::to('broadcast');
+});
+Route::post('broadcast/show', 'BroadcastController@show');
+
 // Ajax Routes
 Route::group(array('prefix' => 'ajax'), function()
 {
