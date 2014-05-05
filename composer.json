@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"rydurham/sentinel": "v1.4.2",
-		"thomaswelton/laravel-gravatar": "0.0.2"
+		"thomaswelton/laravel-gravatar": "0.0.2",
+		"mews/purifier": "1.0.1"
 	},
 	"require-dev" : {
 		"raveren/kint": "dev-master",

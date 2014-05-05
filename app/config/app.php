@@ -121,6 +121,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
+		'Mews\Purifier\PurifierServiceProvider',
 		'Sentinel\SentinelServiceProvider', 
 		'MLM\Providers\RepositoryServiceProvider',
 
