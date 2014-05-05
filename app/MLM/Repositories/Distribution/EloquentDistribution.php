@@ -159,14 +159,15 @@ class EloquentDistribution implements DistributionInterface {
 	}
 
 	/**
-	 * Return all the active distributions associated with a given user
+	 * Return all the active distributions associated with a given user, 
+	 * formatted for a <select> input
 	 *
 	 * @param  integer $user_id
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function active( )
 	{
-		return $this->distribution->currentUser()->orderBy('created_at', 'asc')->paginate( $this->perPage );
+		return $this->distribution->currentUser()->orderBy('created_at', 'asc')->lists('name', 'id');
 	}
 
 	/**
