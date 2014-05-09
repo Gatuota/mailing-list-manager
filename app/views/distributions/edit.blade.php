@@ -58,7 +58,7 @@ Edit List
                     <label for="right-label" class="right inline">Contacts</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-                    <select name="names[normal][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                    <select name="contacts[normal][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
                         @if (isset($contacts['normal']) && count($contacts['normal']) != 0)
                             @foreach($contacts['normal'] as $id => $contact)
                                 <option value="{{{ $id }}}" data-data="{{{ json_encode($contact) }}}" selected>
@@ -68,7 +68,7 @@ Edit List
                         @endif
                     </select>
                 
-                    {{ ($errors->has('names[normal]') ? $errors->first('names[normal]', '<small class="error">:message</small>') : '') }}
+                    {{ ($errors->has('contacts[normal]') ? $errors->first('contacts[normal]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
             </div>
@@ -78,7 +78,7 @@ Edit List
                     <label for="right-label" class="right inline">CC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-                    <select name="names[cc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                    <select name="contacts[cc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
                         @if (isset($contacts['cc']) && count($contacts['cc']) != 0)
                             @foreach($contacts['cc'] as $id => $contact)
                                 <option value="{{{ $id }}}" data-data="{{{ json_encode($contact) }}}" selected>
@@ -87,7 +87,7 @@ Edit List
                             @endforeach
                         @endif
                     </select>
-                {{ ($errors->has('names[cc]') ? $errors->first('names[cc]', '<small class="error">:message</small>') : '') }}
+                {{ ($errors->has('contacts[cc]') ? $errors->first('contacts[cc]', '<small class="error">:message</small>') : '') }}
                 </div>
             </div>
 
@@ -96,7 +96,7 @@ Edit List
                     <label for="right-label" class="right inline">BCC</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('body')) ? 'error' : '' }}">
-                    <select name="names[bcc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
+                    <select name="contacts[bcc][]" class="contactsearch" placeholder="Name or Email" multiple="multiple">
                         @if (isset($contacts['bcc']) && count($contacts['bcc']) != 0)
                             @foreach($contacts['bcc'] as $id => $contact)
                                 <option value="{{{ $id }}}" data-data="{{{ json_encode($contact) }}}" selected>
@@ -105,7 +105,7 @@ Edit List
                             @endforeach
                         @endif
                     </select>
-                {{ ($errors->has('names[bcc]') ? $errors->first('names[bcc]', '<small class="error">:message</small>') : '') }}
+                {{ ($errors->has('contacts[bcc]') ? $errors->first('contacts[bcc]', '<small class="error">:message</small>') : '') }}
                     
                 </div>
             </div>
@@ -195,6 +195,6 @@ Edit List
 @stop 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/selectize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/selectize.custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/selectize/selectize.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/selectize/selectize.custom.css') }}">
 @stop
