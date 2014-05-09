@@ -38,7 +38,7 @@ class EloquentDistribution implements DistributionInterface {
 		if ($distribution->save())
 		{
 		    // Update the contacts associated with the list. 
-			$distribution->contacts()->sync($this->prepareContactSync($data['names']));
+			$distribution->contacts()->sync($this->prepareContactSync($data['contacts']));
 
 		    // all is good!
 		    return $distribution;
@@ -60,9 +60,7 @@ class EloquentDistribution implements DistributionInterface {
 	 * @return Boolean
 	 */
 	public function update( $data )
-	{
-		
-
+	{	
 		$data['user_id'] = $this->session->get( 'userId' );
 
 		$distribution = $this->distribution->find( $data['id'] );
@@ -71,7 +69,10 @@ class EloquentDistribution implements DistributionInterface {
 		if ($distribution->update( $data ))
 		{
 		   	// Update the contacts associated with the list. 
-			$distribution->contacts()->sync($this->prepareContactSync($data['names']));
+			if (array_key_exists('contacts', $data)) 
+			{
+				$distribution->contacts()->sync($this->prepareContactSync($data['contacts']));
+			}
 
 		    // all is good
 		    return $distribution;
@@ -199,11 +200,11 @@ class EloquentDistribution implements DistributionInterface {
 	}
 
 
-	private function prepareContactSync($names)
+	private function prepareContactSync($contacts)
 	{	
 		$syncContainer = array();
 
-		foreach ($names as $method => $contacts) {
+		foreach ($contacts as $method => $contacts) {
 			if (empty($contacts)) 
 			{
 				continue;
