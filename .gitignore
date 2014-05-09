@@ -10,3 +10,4 @@ bootstrap.sh
 Vagrantfile
 .vagrant
 /app/config/local/*
+/public/uploads/*
