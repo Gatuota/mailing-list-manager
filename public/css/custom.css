@@ -9,3 +9,17 @@
 .strikethrough {
 	text-decoration: line-through;
 }
+
+.editable {
+	border: 1px solid #CCC;
+	padding: 8px;
+	margin-bottom: 10px;
+	max-height: 400px;
+	overflow: auto;
+}
+
+.dropzone 
+{
+	margin-bottom: 10px;
+	max-height: 200px;	
+}

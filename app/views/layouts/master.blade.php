@@ -47,7 +47,7 @@
 			<ul class="left">
 				@if (Sentry::check())
 					<li class="divider hide-for-small"></li>
-					<li {{ (Request::is('broadcast')  ? 'class="active"' : '') }}><a href="/#">Broadcast</a></li>
+					<li {{ (Request::is('broadcast')  ? 'class="active"' : '') }}><a href="/broadcast">Broadcast</a></li>
 					<li class="divider hide-for-small"></li>
 					<li {{ (Request::is('contacts*')  ? 'class="active"' : '') }}><a href="{{ action('ContactController@index') }}">Contacts</a></li>
 					<li class="divider hide-for-small"></li>
