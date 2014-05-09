@@ -18,8 +18,8 @@ New Broadcast
                     <label for="right-label" class="right inline">List</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('distribution')) ? 'error' : '' }}">
-                    {{ Form::select('distribution', $distributions, array(), array('placeholder' => 'Name', 'autofocus')) }}
-                    {{ ($errors->has('distribution') ? $errors->first('distribution', '<small class="error">:message</small>') : '') }}
+                    {{ Form::select('distribution', $distributions, array(), array('placeholder' => 'Name', 'autofocus', 'id' => 'distribution', 'style' => 'margin: 0')) }}
+                    <small class="error" id="distributionError" style="display:none">You must choose a distribution list.</small>
                 </div>
             </div>
 
@@ -47,15 +47,28 @@ New Broadcast
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/vendor/jquery.ui.widget.js') }}"></script>
-    <script src="{{ asset('js/vendor/jquery.fileupload.js') }}"></script>
     <script>
         function beforeSubmit()
         {
             var file = document.getElementById("bodyContent");
+            var distribution = document.getElementById("distribution")
+
+            // If no distribution has been selected, halt submission and warn the user. 
+            if (distribution.value == "")
+            {
+                $("#distributionError").show();
+                return false;
+            }
+
+            // If there is no file selected, no need to check the file extension. 
+            if (file.value == "")
+            {
+                return true;
+            }
 
             var ext = file.value.match(/\.([^\.]+)$/)[1];
             console.log(ext);
+
             switch(ext)
             {
                 case 'html':
