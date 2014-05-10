@@ -37,6 +37,7 @@ List Details
                     </li>
                 @endforeach
             </ul>
+            <p><b>Total:</b> {{{ $distribution->count }}}</p> 
         @else 
             <p>No Contacts</p>
         @endif

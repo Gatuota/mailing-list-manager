@@ -32,13 +32,15 @@ class EloquentDistribution implements DistributionInterface {
 	{
 		$distribution = new Distribution( $data + array('user_id' => $this->session->get( 'userId' ), 'active' => 1));
 
-		//dd($data + array('user_id' => $this->session->get( 'userId' )));
-
 		// attempt validation
 		if ($distribution->save())
 		{
 		    // Update the contacts associated with the list. 
 			$distribution->contacts()->sync($this->prepareContactSync($data['contacts']));
+
+			//Update the contact count
+			$distribution->count = $distribution->contacts->count();
+			$distribution->save();
 
 		    // all is good!
 		    return $distribution;
@@ -63,7 +65,7 @@ class EloquentDistribution implements DistributionInterface {
 	{	
 		$data['user_id'] = $this->session->get( 'userId' );
 
-		$distribution = $this->distribution->find( $data['id'] );
+		$distribution = $this->byId( $data['id'] );
 
 		// attempt validation
 		if ($distribution->update( $data ))
@@ -73,6 +75,10 @@ class EloquentDistribution implements DistributionInterface {
 			{
 				$distribution->contacts()->sync($this->prepareContactSync($data['contacts']));
 			}
+
+			//Update the contact count
+			$distribution->count = $distribution->contacts->count();
+			$distribution->save();
 
 		    // all is good
 		    return $distribution;

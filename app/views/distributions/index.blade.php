@@ -30,13 +30,13 @@ Lists
 		<tbody>
 			@foreach ($distributions as $distribution)
 				<tr>
-					<td {{ ( $distribution->trashed() ? "class='strikethrough'" : " " ) }}>
+					<td class='{{ ( $distribution->trashed() ? "strikethrough" : " " ) }}'>
 						<a href="{{ action('DistributionController@show', $distribution->id) }}">{{{ $distribution->name }}}</a>
 					</td>
-					<td {{ ( $distribution->trashed() ? "class='strikethrough'" : " " ) }}>
+					<td class='{{ ( $distribution->trashed() ? "strikethrough" : " " ) }}'>
 						{{ $distribution->replyTo }}</td>
-					<td {{ ( $distribution->trashed() ? "class='strikethrough'" : " " ) }}>
-
+					<td class='{{ ( $distribution->trashed() ? "strikethrough" : " " ) }}'>
+						{{ $distribution->count }}
 					</td>
 					<td>
 						<button class="button small" type="button" onClick="location.href='{{ action('DistributionController@edit', array($distribution->id)) }}'">Edit</button>
