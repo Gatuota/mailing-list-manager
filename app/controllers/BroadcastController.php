@@ -108,7 +108,8 @@ class BroadcastController extends \BaseController {
 		// Prepare to send the e-mail. 
 		$distribution = $this->distribution->byId(Input::get('distribution'));
 
-		dd($distribution->to());
+		
+		//dd($normal->lists('email'));
 		
 		// Run the body content through HTML Purifier
 		$data['body'] = Purifier::clean(Input::get('body'));
@@ -116,27 +117,27 @@ class BroadcastController extends \BaseController {
  		// Prepare the message & submit
 		Mail::queue('emails.broadcast', $data, function($message) use ($distribution)
 		{
-			$message->sender($distribution->replyTo);
+			$message->from($distribution->replyTo);
 			$message->replyTo($distribution->replyTo);
 			$message->subject(e(Input::get('subject')));
-			$recipients = $distribution->contacts;
 
-			// Add recipients
-			foreach ($recipients as $contact)
+			$normal = $distribution->contacts()->where('method', 'normal')->get()->lists('email');
+			$cc = $distribution->contacts()->where('method', 'cc')->get()->lists('email');
+			$bcc = $distribution->contacts()->where('method', 'bcc')->get()->lists('email');
+
+			if ( ! empty($normal) ) 
 			{
-				switch ($contact->pivot->method) {
-					case 'cc':
-						$message->cc($contact->email);
-						break;
+				$message->to($normal);
+			}
 
-					case 'bcc':
-						$message->bcc($contact->email);
-						break;
-					
-					default:
-						$message->to($contact->email);
-						break;
-				}
+			if ( ! empty($cc) )
+			{
+				$message->cc($cc);
+			}
+
+			if ( ! empty($bcc) )
+			{
+				$message->bcc($bcc);
 			}
 			
 			// Add attachments, if necessary
@@ -171,8 +172,7 @@ class BroadcastController extends \BaseController {
 			}
 		}
 
-		Session::flash('success', 'Broadcast sent to ' . $distribution->name);
-		return Redirect::action('BroadcastController@create');
+		return Response::json('success', 200);
 	}
 
 	/**
@@ -202,5 +202,19 @@ class BroadcastController extends \BaseController {
 				'status' => 'error'
 		   ), 400);
 		}
+	}
+
+	public function success()
+	{
+		$name = Input::get('name');
+		Session::flash('success', 'Broadcast sent to ' . $name);
+		return Redirect::action('BroadcastController@create');
+	}
+
+	public function error()
+	{
+		$name = Input::get('name');
+		Session::flash('error', 'There was a problem sending to ' . $name . ". Please try again.");
+		return Redirect::action('BroadcastController@create');
 	}
 }

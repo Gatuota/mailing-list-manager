@@ -47,6 +47,8 @@ Route::get('broadcast/show', function()
 	return Redirect::to('broadcast');
 });
 Route::post('broadcast/show', 'BroadcastController@show');
+Route::get('broadcast/success', 'BroadcastController@success');
+Route::get('broadcast/error', 'BroadcastController@error');
 
 // Ajax Routes
 Route::group(array('prefix' => 'ajax'), function()
