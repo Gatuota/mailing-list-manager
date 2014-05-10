@@ -23,3 +23,10 @@
 	margin-bottom: 10px;
 	max-height: 200px;	
 }
+
+#spin-area{
+	height:100px;
+	width:100px;
+	background-color: #FFF;
+	border-radius: 3px;
+}
