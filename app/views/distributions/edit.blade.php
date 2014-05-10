@@ -141,7 +141,8 @@ Edit List
                 // Tell Selectize to use a remote data source for the autosuggest options
                 plugins: ['remove_button'],
                 persist: false,
-                maxItems: null,
+                maxItems: 100,
+                maxOptions: 10,
                 valueField: 'id',
                 labelField: 'name',
                 dataAttr: 'data-data',
