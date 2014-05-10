@@ -1,16 +1,19 @@
 <?php
 
 use MLM\Repositories\Distribution\DistributionInterface;
+use MLM\Repositories\Record\RecordInterface;
 use Mews\Purifier\Facades\Purifier;
 use Carbon\Carbon;
 
 class BroadcastController extends \BaseController {
 
 	private $distribution;
+	private $record;
 
-	public function __construct(DistributionInterface $distribution)
+	public function __construct(DistributionInterface $distribution, RecordInterface $record)
 	{
 		$this->distribution = $distribution;
+		$this->record = $record;
 
 		//Check CSRF token on POST
 		$this->beforeFilter('csrf', array('on' => 'post'));
@@ -152,6 +155,13 @@ class BroadcastController extends \BaseController {
 			}
 
 		});
+
+		// Save a record of this broadcast
+		$this->record->store('broadcast', array(
+			'distribution' 	=> $distribution->name,
+			'subject' 		=> e(Input::get('subject')),
+			'attachments'	=> (Input::has('attachments') ? Input::get('attachments') : array() )
+		));
 
 		// Remove attachments from storage
 		$path = 'uploads/' . Session::get('email');
