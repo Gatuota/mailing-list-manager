@@ -27,6 +27,7 @@ Home
 				</em>
 			</p>
 			<button class="button" onClick="location.href='{{ action('Sentinel\UserController@edit', array($user->id)) }}'">Edit Profile</button>
+			<button class="button secondary" onClick="location.href='{{ action('RecordController@index') }}'">View Event Log</button>		
 		</div>
 
 		<div class="small-6 columns">
@@ -43,14 +44,6 @@ Home
 		    </ul>
 
 		</div>
-</div>
-
-<div class="row">
-
-	<h4>User Object</h4>
-	<div class="panel">
-		<pre>{{ var_dump($user) }}</pre>
-	</div>
 </div>
 
 @stop
