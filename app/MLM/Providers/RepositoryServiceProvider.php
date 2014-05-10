@@ -4,8 +4,10 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Session\Store;
 use MLM\Repositories\Contact\EloquentContact;
 use MLM\Repositories\Distribution\EloquentDistribution;
+use MLM\Repositories\Record\EloquentRecord;
 use MLM\Contact;
 use MLM\Distribution;
+use MLM\Record;
 
 class RepositoryServiceProvider extends ServiceProvider {
 
@@ -32,6 +34,15 @@ class RepositoryServiceProvider extends ServiceProvider {
             	new Distribution,
                 $app->make('MLM\Repositories\Contact\ContactInterface'),
             	$app['session.store']
+            );
+        });
+
+        // Bind the Record Repository
+        $app->bind('MLM\Repositories\Record\RecordInterface', function($app)
+        {
+            return new EloquentRecord(
+                new Record,
+                $app['session.store']
             );
         });
 

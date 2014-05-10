@@ -38,6 +38,9 @@ class EloquentDistribution implements DistributionInterface {
 		    // Update the contacts associated with the list. 
 			$distribution->contacts()->sync($this->prepareContactSync($data['contacts']));
 
+			// Eager load the contacts to get a count
+			$distribution->load('contacts');
+
 			//Update the contact count
 			$distribution->count = $distribution->contacts->count();
 			$distribution->save();
@@ -75,6 +78,9 @@ class EloquentDistribution implements DistributionInterface {
 			{
 				$distribution->contacts()->sync($this->prepareContactSync($data['contacts']));
 			}
+
+			// Refresh the eager loaded contacts to get an accurate count
+			$distribution->load('contacts');
 
 			//Update the contact count
 			$distribution->count = $distribution->contacts->count();
