@@ -50,6 +50,9 @@ Route::post('broadcast/show', 'BroadcastController@show');
 Route::get('broadcast/success', 'BroadcastController@success');
 Route::get('broadcast/error', 'BroadcastController@error');
 
+// Record Routes
+Route::get('records', 'RecordController@index');
+
 // Ajax Routes
 Route::group(array('prefix' => 'ajax'), function()
 {
