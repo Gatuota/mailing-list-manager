@@ -38,7 +38,12 @@ List Details
       </div>
       <div class="small-6 columns">
         <p>
-            <b>Reply Alias</b> {{{ $distribution->replyTo }}}
+            <b>Reply Alias</b> 
+            @if (! empty($distribution->replyName))
+                {{{ $distribution->replyName }}} &lt;{{{ $distribution->replyTo }}}&gt;
+            @else 
+                {{{ $distribution->replyTo }}}
+            @endif
         </p>      
         <p>
             <b>Subject Template</b> {{{ $distribution->subject }}}

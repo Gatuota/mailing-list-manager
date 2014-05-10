@@ -7,7 +7,7 @@ class Distribution extends BaseModel {
 	 * 
 	 * @var array
 	 */
-	protected $fillable = array('name', 'replyTo', 'subject', 'body', 'active', 'user_id');
+	protected $fillable = array('name', 'replyTo', 'replyName', 'subject', 'body', 'active', 'user_id');
 
 	/**
 	 * Mass Assigment is not permitted for these table columns

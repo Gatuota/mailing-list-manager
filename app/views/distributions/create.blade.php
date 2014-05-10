@@ -35,6 +35,16 @@ New List
 
             <div class="row">
                 <div class="small-3 columns">
+                    <label for="right-label" class="right inline">Reply Name</label>
+                </div>
+                <div class="small-9 columns {{ ($errors->has('replyName')) ? 'error' : '' }}">
+                    {{ Form::text('replyName', null, array('placeholder' => 'E-Mail')) }}
+                    {{ ($errors->has('replyName') ? $errors->first('replyName', '<small class="error">:message</small>') : '') }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-3 columns">
                     <label for="right-label" class="right inline">Subject</label>
                 </div>
                 <div class="small-9 columns {{ ($errors->has('subject')) ? 'error' : '' }}">

@@ -117,8 +117,8 @@ class BroadcastController extends \BaseController {
  		// Prepare the message & submit
 		Mail::queue('emails.broadcast', $data, function($message) use ($distribution)
 		{
-			$message->from($distribution->replyTo);
-			$message->replyTo($distribution->replyTo);
+			$message->from($distribution->replyTo, $distribution->replyName);
+			$message->replyTo($distribution->replyTo, $distribution->replyName);
 			$message->subject(e(Input::get('subject')));
 
 			$normal = $distribution->contacts()->where('method', 'normal')->get()->lists('email');
