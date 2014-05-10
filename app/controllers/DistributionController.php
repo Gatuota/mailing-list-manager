@@ -101,13 +101,13 @@ class DistributionController extends \BaseController {
 		$distribution = $this->distribution->byId($distribution_id);
 
 		// Prepare the contacts lists, organized by 'method'
-		// array('L' => 'Large', 'S' => 'Small')
 		$contacts = array();
 
 		foreach ($distribution->contacts as $contact)
 		{
 			$displayName = $contact->firstName . ' ' . $contact->middleName . ' ' . $contact->lastName;
 			
+			// Prepare contact data for selectize.js
 			$contacts[$contact->pivot->method][$contact->id] = array(
 				'displayName' => $displayName, 
 				'id' => $contact->id, 
