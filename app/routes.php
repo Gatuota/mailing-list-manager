@@ -47,7 +47,6 @@ Route::get('broadcast/show', function()
 	return Redirect::to('broadcast');
 });
 Route::post('broadcast/show', 'BroadcastController@show');
-Route::post('broadcast/send', 'BroadcastController@send');
 
 // Ajax Routes
 Route::group(array('prefix' => 'ajax'), function()
@@ -55,4 +54,5 @@ Route::group(array('prefix' => 'ajax'), function()
     // Contacts
     Route::get('contacts/search', 'ContactController@ajaxSearch');
     Route::post('broadcast/upload', 'BroadcastController@upload');
+    Route::post('broadcast/send', 'BroadcastController@send');
 });
