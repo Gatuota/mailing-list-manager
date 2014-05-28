@@ -67,20 +67,17 @@ New Broadcast
             }
 
             var ext = file.value.match(/\.([^\.]+)$/)[1];
-            console.log(ext);
 
             switch(ext)
             {
                 case 'html':
                 case 'htm':
                 case 'txt':
-                    console.log('allowed');
                     $('#fileError').hide();
                     $('#submitButton').addClass('disabled');
                     return true;
                     break;
                 default:
-                    console.log('not allowed');
                     $('#fileError').show();
                     this.value='';
                     return false;

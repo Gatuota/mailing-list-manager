@@ -149,8 +149,6 @@ Edit List
                 searchField: ['displayName', 'email'],
                 render: {
                     item: function(item, escape) {
-                        console.log('item');
-                        console.log(item);
                         var title = item.displayName || item.email;
                         return '<div>' +
                             '<span class="contact_item">' + 
@@ -158,7 +156,6 @@ Edit List
                             '</span></div>';
                     },
                     option: function(item, escape) {
-                        console.log(item);
                         return '<div>' +
                             '<span class="option_item">' + 
                             (item.displayName.replace(/^[\s\t]+/,"").length  != 0 ? escape(item.displayName) : escape(item.email) ) + 
@@ -188,7 +185,6 @@ Edit List
                     }
                     var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));                 
                     if (match) {
-                        console.log(match);
                         return {
                             email : match[2],
                             name  : $.trim(match[1]),

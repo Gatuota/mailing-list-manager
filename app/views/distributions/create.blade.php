@@ -134,7 +134,6 @@ New List
                             '</span></div>';
                     },
                     option: function(item, escape) {
-                        console.log(item);
                         return '<div>' +
                             '<span class="option_item">' + 
                             (item.displayName != ' ' ? escape(item.displayName) : escape(item.email) ) + 
@@ -164,7 +163,6 @@ New List
                     }
                     var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));                 
                     if (match) {
-                        console.log(match);
                         return {
                             email : match[2],
                             name  : $.trim(match[1]),
